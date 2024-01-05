@@ -1,0 +1,168 @@
+﻿
+@{
+    var userId = (int?)Session["UserId"];
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Grocery Delivery Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/BackButtonDisable")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+		.icon {
+            height:30px;
+            width:30px;
+		}
+        .sidenav {
+            width: 250px;
+            height: 100%;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            padding-top: 20px;
+            transition: 0.5s;
+        }
+
+            .sidenav ul {
+                margin-top: 30px;
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .sidenav li {
+                text-decoration: none;
+                font-size: 18px;
+                color: #e9ecef;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: color 0.60s;
+            }
+
+                .sidenav li:hover {
+                    color: #f1f1f1;
+                }
+
+            .sidenav a {
+                text-decoration: none;
+            }
+
+            .sidenav:hover {
+                left: 0;
+            }
+
+            /* Add a simple animation on touch */
+            .sidenav ul li:active {
+                transform: scale(0.95);
+            }
+
+
+            .sidenav ul li.divider {
+                border-bottom: 1px solid #555; /* Adjust color and style as needed */
+                /*  margin-bottom: 5px;*/ /* Adjust spacing between items */
+            }
+
+        .sidenav-logo {
+            text-align: center; /* Center the logo */
+            margin-bottom: 20px; /* Add some space below the logo */
+        }
+
+            .sidenav-logo img {
+                Width: 45%;
+                max-width: 110px;
+                height: auto;
+                border-radius: 50%
+            }
+
+
+        .product-link:hover,
+        .product-link:hover a {
+            background: white; /* Change to the desired hover color for li */
+            cursor: pointer;
+            color: black;
+        }
+
+        .product-link {
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+            .product-link a {
+                color: white;
+            }
+
+                .product-link a:hover {
+                    color: black; /* Change to the desired hover color */
+                }
+
+
+        .main-content {
+            margin-left: 250px; /* Adjust this margin based on your side navigation bar width */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidenav bg-dark">
+        <ul class=" list-unstyled">
+            <div class="sidenav-logo">
+                <img src="https://cdn-icons-png.flaticon.com/256/9285/9285601.png" alt="Logo">
+            </div>
+            <li class="divider mt-5"></li>
+            <li class=" product-link  "><img src="https://cdn-icons-png.flaticon.com/128/3875/3875980.png" alt="Product List Icon" class="icon"> @Html.ActionLink("Product List  ", "Index", "Product") </li>
+            <li class="divider"></li>
+            <li class=" product-link "><img src="https://cdn-icons-png.flaticon.com/128/11449/11449997.png" alt="Product Add Icon" class="icon"> @Html.ActionLink("Product Add ", "AddProduct", "Product") </li>
+            <li class="divider"></li>
+            <li class=" product-link "><img src="https://cdn-icons-png.flaticon.com/128/6012/6012282.png" alt="Customer List Icon" class="icon"> @Html.ActionLink("Customer List", "ViewCustomers", "Admin") </li>
+            <li class="divider"></li>
+            <li class=" product-link "><img src="https://cdn-icons-png.flaticon.com/128/9653/9653980.png" alt="View Profile Icon" class="icon"> @Html.ActionLink("View Profile", "ViewProfile", "Admin", new { AdminId = userId }, null)</li>
+        </ul>
+    </div>
+
+
+    <div class="main-content">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            @Html.ActionLink("Home Grocery", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+
+                    @*<li>@Html.ActionLink("Home", "Index", "Account", new { area = "" }, new { @class = "nav-link" })</li>*@
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Registration", "Registration", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Log out", "Logout", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item nav-link disabled text-light ml-auto me-5">
+                            Welcome, @User.Identity.Name!
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Log in", "Login", "Account", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
