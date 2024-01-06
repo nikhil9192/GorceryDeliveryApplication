@@ -16,20 +16,32 @@
 
         protected override void Seed(FoodDeliveryDAL.Data.FoodDbContext context)
         {
+            // Add roles to the Role table
+            context.Roles.AddOrUpdate(
+                r => r.Name,
+                new Role { Name = "Admin" },
+                new Role { Name = "Customer" }
+            // Add more roles as needed
+            );
+            context.SaveChanges();
             Admin newadmin = new Admin
             {
-                Email = "Shashant1@gmial.com",
+                Email = "Shashant1@gmail.com", // Fix the typo in the email address
                 UserName = "shashant1234",
                 FirstName = "shashant",
                 LastName = "chaudhary",
                 PhoneNumber = "8896477007",
-                RoleId = 1
+                RoleId = 1 // Assuming the admin role has RoleId = 1
             };
+
             var passwordHash = new PasswordHasher<Admin>();
             newadmin.Password = passwordHash.HashPassword(newadmin, "Admin@123");
-            context.Admins.Add(newadmin);
-           context.SaveChanges();
 
+            context.Admins.AddOrUpdate(newadmin);
+            context.SaveChanges();
+
+            base.Seed(context);
         }
+
     }
 }
