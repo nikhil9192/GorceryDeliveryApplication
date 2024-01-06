@@ -36,3 +36,16 @@ Follow these steps to clone the ASP.NET Framework repository and set up the proj
    Enable-Migrations
    Update-Database
 
+## Resolve "Could not find a part of the path ... bin\roslyn\csc.exe" Error
+
+If you encounter the error "Could not find a part of the path ... bin\roslyn\csc.exe" while running the project, follow these steps to resolve it:
+
+1. Open Visual Studio.
+
+2. Navigate to **Tools > NuGet Package Manager > Package Manager Console**.
+
+3. In the Package Manager Console, run the following command:
+
+   ```bash
+   Update-Package Microsoft.CodeDom.Providers.DotNetCompilerPlatform -r
+
