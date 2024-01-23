@@ -109,11 +109,13 @@
     <Compile Include="Address.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="Cart.cs" />
+    <Compile Include="Category.cs" />
     <Compile Include="Cutomer.cs" />
     <Compile Include="Data\FoodDbContext.cs" />
     <Compile Include="Interface\IAddressRepository.cs" />
     <Compile Include="Interface\IAdminRepository.cs" />
     <Compile Include="Interface\ICartRepository.cs" />
+    <Compile Include="Interface\ICategory.cs" />
     <Compile Include="Interface\ICustomerRepository.cs" />
     <Compile Include="Interface\IOrderDetailRepository.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
@@ -178,6 +180,18 @@
     <Compile Include="Migrations\202312310830416_productTableValidation.designer.cs">
       <DependentUpon>202312310830416_productTableValidation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202401230700307_AddItemByCategory.cs" />
+    <Compile Include="Migrations\202401230700307_AddItemByCategory.designer.cs">
+      <DependentUpon>202401230700307_AddItemByCategory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401231731395_UniqueName.cs" />
+    <Compile Include="Migrations\202401231731395_UniqueName.designer.cs">
+      <DependentUpon>202401231731395_UniqueName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202401231746073_wramp.cs" />
+    <Compile Include="Migrations\202401231746073_wramp.designer.cs">
+      <DependentUpon>202401231746073_wramp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
@@ -186,6 +200,7 @@
     <Compile Include="Repository\AddressRepository.cs" />
     <Compile Include="Repository\AdminRepository.cs" />
     <Compile Include="Repository\CartRepository.cs" />
+    <Compile Include="Repository\CategoryRepository.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\OrderDetailRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
@@ -242,6 +257,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312310830416_productTableValidation.resx">
       <DependentUpon>202312310830416_productTableValidation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401230700307_AddItemByCategory.resx">
+      <DependentUpon>202401230700307_AddItemByCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401231731395_UniqueName.resx">
+      <DependentUpon>202401231731395_UniqueName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202401231746073_wramp.resx">
+      <DependentUpon>202401231746073_wramp.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
