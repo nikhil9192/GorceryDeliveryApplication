@@ -20,8 +20,10 @@ namespace FoodDeliveryApplicationUI.Controllers
         private readonly ICartRepository cartRepository;
         private readonly IOrderRepository orderRepository;
         private readonly IAddressRepository addressRepository;
+        private readonly ICategory _categoryRepository;
 
-        public CustomerController(ICustomerRepository customerRepository, IProductRepository productRepository, ICartRepository cartRepository, IOrderRepository orderRepository ,IAddressRepository addressRepository)
+        public CustomerController(ICustomerRepository customerRepository, IProductRepository productRepository, ICartRepository cartRepository, IOrderRepository orderRepository ,IAddressRepository addressRepository 
+            ,ICategory category)
         {
             //   _context = new FoodDbContext();
             this.customerRepository = customerRepository;
@@ -29,6 +31,7 @@ namespace FoodDeliveryApplicationUI.Controllers
             this.cartRepository = cartRepository;
             this.orderRepository = orderRepository;
             this.addressRepository = addressRepository;
+            this._categoryRepository = category;
         }
         // GET: Customer
         public ActionResult Index()
@@ -39,13 +42,17 @@ namespace FoodDeliveryApplicationUI.Controllers
         }
         private ProductViewModel MapToViewModel(Product product)
         {
+            IEnumerable<Category> categories = _categoryRepository.GetAllCategories();
+            string categoryName = categories.FirstOrDefault(c => c.CategoryId == product.CategoryId)?.CategoryName;
             return new ProductViewModel
             {
                 ProductId = product.ProductId,
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                ImageFileName = product.ImageFileName
+                ImageFileName = product.ImageFileName,
+                CategoryName = categoryName,
+                CategoryId= product.CategoryId,
                 // Add other properties as needed
             };
         }
