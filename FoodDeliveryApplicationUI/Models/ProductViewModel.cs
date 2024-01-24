@@ -34,6 +34,9 @@ namespace FoodDeliveryApplicationUI.Models
         [Required(ErrorMessage = "Category is required:")]
         [Display(Name = "Product Category:")]
         public int CategoryId { get; set; }
+
+        [Display(Name = "Category Name")]
+        public string CategoryName { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; } // Dropdown list items for categories
     }
 
