@@ -31,4 +31,4 @@ namespace FoodDeliveryApplicationUI.Models
         public string ImageFileName { get; set; }
     }
 
-}
+} 
