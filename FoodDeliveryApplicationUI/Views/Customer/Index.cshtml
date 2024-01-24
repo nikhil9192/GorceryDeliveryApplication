@@ -8,8 +8,8 @@
     <!-- Dropdown for product categories -->
    
     <div class=" d-flex  justify-content-end form-group mb-0">
-        <label class="d-flex align-items-center mb-0 me-2" for="categoryFilter">Filter by Category:</label>
-        <select id="categoryFilter" class="form-control">
+     <label class="d-flex align-items-center mb-0 me-2 fw-bolder" for="categoryFilter">Categories :</label>
+        <select id="categoryFilter" class="form-control fw-bolder "  style="width: 20%;">
             <option value="">All Categories</option>
             @foreach (var category in Model.Select(p => new { p.CategoryId, p.CategoryName }).Distinct())
             {
