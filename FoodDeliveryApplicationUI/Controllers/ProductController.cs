@@ -2,6 +2,7 @@
 using FoodDeliveryDAL;
 using FoodDeliveryDAL.Data;
 using FoodDeliveryDAL.Interface;
+using FoodDeliveryDAL.Repository;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,15 @@ namespace FoodDeliveryApplicationUI.Controllers
      //   private readonly FoodDbContext  _context;
         private readonly IProductRepository productRepository;
         private readonly ICartRepository cartRepository;
+        private readonly ICategory _categoryRepository;
 
-        public ProductController(IProductRepository productRepository,ICartRepository cartRepository)
+        public ProductController(IProductRepository productRepository,ICartRepository cartRepository
+            ,ICategory categoryRepository)
         {
           
             this.productRepository = productRepository;
             this.cartRepository = cartRepository;
+            this._categoryRepository = categoryRepository;
         }
         public ActionResult Index()
         {
@@ -38,7 +42,22 @@ namespace FoodDeliveryApplicationUI.Controllers
 
         public ActionResult AddProduct()
         {
-            return View();
+
+            var categories = _categoryRepository.GetAllCategories();
+
+            // Map categories to SelectListItem
+            var categoryList = categories.Select(c => new SelectListItem
+            {
+                Value = c.CategoryId.ToString(),
+                Text = c.CategoryName
+            });
+            var viewModel = new ProductViewModel
+            {
+                Categories = categoryList,
+                // Set the CategoryId to the ID of the first category (if available)
+                CategoryId = categories.FirstOrDefault()?.CategoryId ?? 0
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -65,6 +84,7 @@ namespace FoodDeliveryApplicationUI.Controllers
                     Price = model.Price,
                     ImageFileName = model.ImageFileName,
                     ProductQuantity = model.ProductQuantity,
+                    CategoryId=model.CategoryId,
                 };
 
                 // Add the product to the database
@@ -100,7 +120,12 @@ namespace FoodDeliveryApplicationUI.Controllers
                 ModelState.AddModelError(string.Empty, "Product not found.");
                 return View();
             }
-
+            var categories = _categoryRepository.GetAllCategories();
+            var categoryList = categories.Select(c => new SelectListItem
+            {
+                Value = c.CategoryId.ToString(),
+                Text = c.CategoryName
+            });
             var viewModel = new ProductViewModel
             {
                 ProductId = product.ProductId,
@@ -109,6 +134,8 @@ namespace FoodDeliveryApplicationUI.Controllers
                 Price = product.Price,
                 ImageFileName = product.ImageFileName,
                 ProductQuantity= product.ProductQuantity,
+                Categories = categoryList,
+                CategoryId = product.CategoryId
             };
 
             return View(viewModel);
@@ -132,6 +159,7 @@ namespace FoodDeliveryApplicationUI.Controllers
              product.Description = viewModel.Description;
              product.Price = viewModel.Price;
              product.ProductQuantity = viewModel.ProductQuantity;
+            product.CategoryId = viewModel.CategoryId;
 
           if (viewModel.ImageFile != null && viewModel.ImageFile.ContentLength > 0)
                 {

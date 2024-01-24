@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FoodDeliveryApplicationUI.Models
 {
@@ -29,6 +30,11 @@ namespace FoodDeliveryApplicationUI.Models
 
         // Image file name (to store the file name in the database)
         public string ImageFileName { get; set; }
+
+        [Required(ErrorMessage = "Category is required:")]
+        [Display(Name = "Product Category:")]
+        public int CategoryId { get; set; }
+        public IEnumerable<SelectListItem> Categories { get; set; } // Dropdown list items for categories
     }
 
 }
