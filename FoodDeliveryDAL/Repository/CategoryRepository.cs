@@ -27,7 +27,11 @@ namespace FoodDeliveryDAL.Repository
         public bool CategoryExists(string categoryName, int id)
         {
          Category  category = _dbContext.Categories.FirstOrDefault(cat => cat.CategoryName == categoryName);
-            if (category.CategoryId == id) return false;
+            if (category != null)
+            {
+                if (category.CategoryId == id) return false;
+            }
+           
             return true;
 
         }

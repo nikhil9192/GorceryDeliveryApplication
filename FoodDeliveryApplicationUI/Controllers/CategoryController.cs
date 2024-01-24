@@ -100,7 +100,7 @@ namespace FoodDeliveryApplicationUI.Controllers
                 }
 
 
-                if (!_categoryRepository.CategoryExists(categoryModel.CategoryName, categoryModel.CategoryId))
+                if (_categoryRepository.CategoryExists(categoryModel.CategoryName, categoryModel.CategoryId))
                 {
                     // Update the properties of the existing category
                     existingCategory.CategoryName = categoryModel.CategoryName;
