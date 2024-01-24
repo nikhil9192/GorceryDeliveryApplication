@@ -27,6 +27,7 @@ namespace FoodDeliveryDAL.Interface
 
         void DeleteCartItems(List<Cart> cartItems);
          Cart RemoveCartItem(Cart cartItem);
+       
     }
 
 }
