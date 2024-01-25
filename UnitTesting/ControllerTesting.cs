@@ -164,7 +164,7 @@ namespace test
             // Arrange
             int customerId = 1; // Replace with a valid customer ID
             var customerRepositoryMock = new Mock<ICustomerRepository>();
-            var controller = new CustomerController(customerRepositoryMock.Object, Mock.Of<IProductRepository>(), Mock.Of<ICartRepository>(), Mock.Of<IOrderRepository>(), Mock.Of<IAddressRepository>());
+            var controller = new CustomerController(customerRepositoryMock.Object, Mock.Of<IProductRepository>(), Mock.Of<ICartRepository>(), Mock.Of<IOrderRepository>(), Mock.Of<IAddressRepository>(),Mock.Of<ICategory>());
 
             var validCustomerModel = new EditUserView
             {
@@ -200,64 +200,6 @@ namespace test
             customerRepositoryMock.Verify(repo => repo.GetCustomerById(customerId), Times.Once);
             customerRepositoryMock.Verify(repo => repo.customerSAveChanges(), Times.Once);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        //[Test]
-        //public void EditCustomer_WithValidCustomerModel_RedirectsToViewProfile()
-        //{
-        //    // Arrange
-        //    int customerId = 1; // Replace with a valid customer ID
-        //    var customerRepositoryMock = new Mock<ICustomerRepository>();
-        //    var controller = new CustomerController(customerRepositoryMock.Object, Mock.Of<IProductRepository>(), Mock.Of<ICartRepository>(), Mock.Of<IOrderRepository>(), Mock.Of<IOrderDetailRepository>());
-
-        //    var validCustomerModel = new CustomerModel
-        //    {
-        //        Id = customerId,
-        //        FirstName = "Updated",
-        //        LastName = "User",
-        //        Email = "updated.user@example.com",
-        //        PhoneNumber = "987-654-3210",
-        //        UserName = "updated.user"
-        //    };
-
-        //    var existingCustomer = new Customer
-        //    {
-        //        Id = customerId,
-        //        FirstName = "siva",
-        //        LastName = "sai",
-        //        Email = "siva@example.com",
-        //        PhoneNumber = "123-456-7890",
-        //        UserName = "sivasai"
-        //    };
-
-        //    customerRepositoryMock.Setup(repo => repo.GetCustomerById(customerId)).Returns(existingCustomer);
-
-        //    // Act
-        //    var result = controller.EditCustomer(validCustomerModel) as RedirectToRouteResult;
-
-        //    // Assert
-        //    ClassicAssert.IsNotNull(result);
-        //    ClassicAssert.AreEqual("ViewProfile", result.RouteValues["action"]);
-        //    ClassicAssert.AreEqual("Customer", result.RouteValues["controller"]);
-        //    // Add more assertions as needed
-
-        //    // Verify that the repository method was called
-        //    customerRepositoryMock.Verify(repo => repo.GetCustomerById(customerId), Times.Once);
-        //    customerRepositoryMock.Verify(repo => repo.customerSAveChanges(), Times.Once);
-        //    // Add more verification as needed
-        //}
-
-
         [Test]
         public void GetCustomerProfile_ValidCustomerId_ReturnsCustomerModel()
         {
@@ -272,6 +214,7 @@ namespace test
                 Mock.Of<ICartRepository>(),
                 Mock.Of<IOrderRepository>(),
                 addressRepositoryMock.Object // Pass the mock for IAddressRepository here
+                , Mock.Of<ICategory>()
             );
 
             var existingCustomer = new Customer
@@ -330,13 +273,14 @@ namespace test
             int productId = 1;
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartRepositoryMock = new Mock<ICartRepository>();
+            var CategoryMock = new Mock<ICategory>();
 
             // Assuming you have a utility method to map a Product to ProductViewModel
             var productViewModel = new ProductViewModel { };
             productRepositoryMock.Setup(repo => repo.GetProductById(productId))
                 .Returns(new Product { ProductId = productId, });
 
-            var controller = new ProductController(productRepositoryMock.Object, cartRepositoryMock.Object);
+            var controller = new ProductController(productRepositoryMock.Object, cartRepositoryMock.Object, CategoryMock.Object);
 
             // Act
             var result = controller.Edit(productId) as ViewResult;
@@ -356,8 +300,8 @@ namespace test
             int productId = 1; // Replace with a valid product ID
             var productRepositoryMock = new Mock<IProductRepository>();
             var cartRepositoryMock = new Mock<ICartRepository>();
-
-            var controller = new ProductController(productRepositoryMock.Object, cartRepositoryMock.Object);
+            var CategoryMock = new Mock<ICategory>();
+            var controller = new ProductController(productRepositoryMock.Object, cartRepositoryMock.Object, CategoryMock.Object);
 
             // Assuming you have a utility method to map a Product to ProductViewModel
             var productViewModel = new ProductViewModel { };
