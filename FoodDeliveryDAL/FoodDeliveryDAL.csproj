@@ -180,10 +180,6 @@
     <Compile Include="Migrations\202312310830416_productTableValidation.designer.cs">
       <DependentUpon>202312310830416_productTableValidation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202401242006084_Fix.cs" />
-    <Compile Include="Migrations\202401242006084_Fix.designer.cs">
-      <DependentUpon>202401242006084_Fix.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderDetail.cs" />
@@ -249,9 +245,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202312310830416_productTableValidation.resx">
       <DependentUpon>202312310830416_productTableValidation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202401242006084_Fix.resx">
-      <DependentUpon>202401242006084_Fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
