@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="~/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title -Grocery Delivery Application</title>
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+	
+	<style>
+		/* Your existing styles remain unchanged */
+
+		.icon {
+			height: 30px;
+			width: 30px;
+		}
+
+		.navbar-nav .nav-link {
+			padding: 10px 15px;
+			transition: background-color 0.2s;
+		}
+
+		.dropdown:hover .dropdown-menu {
+			display: block;
+		}
+
+		.body-content {
+			padding: 0px 0px 20px 0px;
+			background-color: #f4f4f4;
+		}
+
+		body, html {
+			margin: 0;
+			padding: 0;
+		}
+
+		.jumbotron {
+			padding: 1rem 2rem;
+		}
+
+		footer {
+			
+			padding: 10px 0;
+			background-color: #222;
+			color: white;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+
+            @Html.ActionLink("Grocery Delivery", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="me-4" >
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Registration", "Registration", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="loginDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="loginDropdown">
+							<a class="dropdown-item" href="@Url.Action("AdminLogin", "Account")">
+								<img src="https://cdn-icons-png.flaticon.com/128/2206/2206368.png" alt="Admin Icon" class="icon"> Admin
+							</a>
+							<a class="dropdown-item" href="@Url.Action("CustomerLogin", "Account")">
+								<img src="https://cdn-icons-png.flaticon.com/128/3201/3201521.png" alt="Customer Icon" class="icon"> Customer
+							</a>
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid body-content" style="margin:auto">
+        @RenderBody()
+        <hr />
+
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

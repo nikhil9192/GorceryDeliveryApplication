@@ -1,0 +1,118 @@
+﻿@model List<FoodDeliveryApplicationUI.Models.ProductViewModel>
+
+@{
+    ViewBag.Title = "Product List";
+}
+<style>
+    /* Additional styles for the search block */
+
+
+
+    .btn btn-outline-light {
+        border-color: aqua;
+    }
+
+    .navbar-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-input {
+        margin-right: 40px;
+    }
+    .input-group-append {
+        background-color: black;
+    }
+</style>
+
+<div class="Searchbar">
+    <!-- Search Block -->
+    <form class="navbar-form form-inline my-2 my-lg-0" method="post" action="@Url.Action("SearchEng", "Customer")">
+        <div class="input-group">
+            <input class="form-control search-input" type="search" name="searchTerm" placeholder="Search by name" aria-label="Search">
+            <div class="input-group-append">
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <!-- Dropdown for product categories -->
+   
+    <div class=" d-flex  justify-content-end form-group mb-0">
+     <label class="d-flex align-items-center mb-0 me-2 fw-bolder" for="categoryFilter">Categories :</label>
+        <select id="categoryFilter" class="form-control fw-bolder "  style="width: 20%;">
+            <option value="">All Categories</option>
+            @foreach (var category in Model.Select(p => new { p.CategoryId, p.CategoryName }).Distinct())
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+        </select>
+    </div>
+
+    <!-- Loop through categories -->
+    @foreach (var category in Model.Select(p => new { p.CategoryId, p.CategoryName }).Distinct())
+    {
+        <div id="categorySection-@category.CategoryId">
+            <h3>@category.CategoryName</h3>
+
+            <div class="row">
+                @foreach (var product in Model.Where(p => p.CategoryId == category.CategoryId))
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card">
+                            <img src="~/Images/@product.ImageFileName" class="card-img-top" alt="@product.Name product not found" style="max-height: 200px;">
+                            <div class="card-body">
+                                <h5 class="card-title">@product.Name</h5>
+                                <p class="card-text">@product.Description</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="card-text price-text">@product.Price kg</p>
+                                    <button class="btn btn-primary" onclick="addToCart(@product.ProductId)">
+                                        <span class="bi bi-cart-fill cart-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Handle dropdown change event
+            $('#categoryFilter').change(function () {
+                var selectedCategoryId = $(this).val();
+
+                // Hide all category sections
+                $('div[id^="categorySection-"]').hide();
+
+                if (selectedCategoryId) {
+                    // Show the selected category section
+                    $('#categorySection-' + selectedCategoryId).show();
+                } else {
+                    // Show all categories if "All Categories" is selected
+                    $('div[id^="categorySection-"]').show();
+                }
+            });
+        });
+
+        function addToCart(productId) {
+            // AJAX request to call the AddToCart action in CustomerController
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Customer")',
+                type: 'POST',
+                data: { productId: productId },
+                error: function () {
+                    alert("Error adding product to cart.");
+                }
+            });
+        }
+    </script>
+}
